@@ -48,11 +48,10 @@ def translate(content):
     js=Py4Js()
     tk=js.getTk(content)
     if len(content)>4891:
-        print("翻译的长度超过限制！！！")
+        print("字符长度超过限制！")
         return
     param={'tk': tk, 'q': content}  
-    r=requests.get("http://translate.google.cn/translate_a/single?client=t&sl=en&tl=zh-CN&hl=zh-CN&dt=at&dt=bd&dt=ex&dt=ld&dt=md&dt=qca&dt=rw&dt=rm&dt=ss&dt=t&ie=UTF-8&oe=UTF-8&clearbtn=1&otf=1&pc=1&srcrom=0&ssel=0&tsel=0&kc=2", params=param)
-    #返回的结果为Json，解析为一个嵌套列表  
+    r=requests.get("http://translate.google.cn/translate_a/single?client=t&sl=en&tl=zh-CN&hl=zh-CN&dt=at&dt=bd&dt=ex&dt=ld&dt=md&dt=qca&dt=rw&dt=rm&dt=ss&dt=t&ie=UTF-8&oe=UTF-8&clearbtn=1&otf=1&pc=1&srcrom=0&ssel=0&tsel=0&kc=2", params=param) 
     result=''
     for i in range(len(r.json()[0])):
         if r.json()[0][i][0]:
@@ -60,5 +59,5 @@ def translate(content):
     print(result)
       
 if __name__=="__main__": 
-    content="The HTTP Digest Access Authentication implementation in Apache Tomcat 5.5.x before 5.5.36, 6.x before 6.0.36, and 7.x before 7.0.30 does not properly check for stale nonce values in conjunction with enforcement of proper credentials, which makes it easier for remote attackers to bypass intended access restrictions by sniffing the network for valid requests."     
+    content="Beautiful is better than ugly.Explicit is better than implicit.Simple is better than complex.Complex is better than complicated. "     
     translate(content) 
