@@ -1,5 +1,5 @@
 # GoogleTranslate谷歌翻译
-python3谷歌翻译
+谷歌翻译 python3
 ## 依赖
 ~~~python
  pip install PyExecJS
