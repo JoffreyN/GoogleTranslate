@@ -44,19 +44,22 @@ class Py4Js():
     def getTk(self,text):  
         return self.ctx.call("TL",text)  
      
-def translate(content):
+def translate(content,type='en_ch'):
     js=Py4Js()
     tk=js.getTk(content)
     if len(content)>4891:
         print("字符长度超过限制！")
         return
     param={'tk': tk, 'q': content}  
-    r=requests.get("http://translate.google.cn/translate_a/single?client=t&sl=en&tl=zh-CN&hl=zh-CN&dt=at&dt=bd&dt=ex&dt=ld&dt=md&dt=qca&dt=rw&dt=rm&dt=ss&dt=t&ie=UTF-8&oe=UTF-8&clearbtn=1&otf=1&pc=1&srcrom=0&ssel=0&tsel=0&kc=2", params=param) 
+    if type=='en_ch':
+        r=requests.get("http://translate.google.cn/translate_a/single?client=t&sl=en&tl=zh-CN&hl=zh-CN&dt=at&dt=bd&dt=ex&dt=ld&dt=md&dt=qca&dt=rw&dt=rm&dt=ss&dt=t&ie=UTF-8&oe=UTF-8&clearbtn=1&otf=1&pc=1&srcrom=0&ssel=0&tsel=0&kc=2", params=param) 
+    elif type=='ch_en':
+        r=requests.get("http://translate.google.cn/translate_a/single?client=t&sl=zh-CN&tl=en&hl=en&dt=at&dt=bd&dt=ex&dt=ld&dt=md&dt=qca&dt=rw&dt=rm&dt=ss&dt=t&ie=UTF-8&oe=UTF-8&clearbtn=1&otf=1&pc=1&srcrom=0&ssel=0&tsel=0&kc=2", params=param)
     result=''
     for i in range(len(r.json()[0])):
         if r.json()[0][i][0]:
             result+=r.json()[0][i][0]
-    print(result)
+    return result
       
 if __name__=="__main__": 
     content="Beautiful is better than ugly.Explicit is better than implicit.Simple is better than complex.Complex is better than complicated. "     
