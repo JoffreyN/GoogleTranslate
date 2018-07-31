@@ -11,7 +11,7 @@ import GoogleTranslate
 # 英译中
 GoogleTranslate.translate('hello world')
 # 中译英
-GoogleTranslate.translate('你好世界')
+GoogleTranslate.translate('你好世界','ch_en')
 ~~~
 ## 说明
 1、计算tk的js部分来自https://github.com/cocoa520/Google_TK<br>
