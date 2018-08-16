@@ -44,17 +44,24 @@ class Py4Js():
     def getTk(self,text):  
         return self.ctx.call("TL",text)  
      
-def translate(content,type='en_ch'):
+def translate(content,types=''):
     js=Py4Js()
     tk=js.getTk(content)
     if len(content)>4891:
         print("字符长度超过限制！")
         return
     param={'tk': tk, 'q': content}
-    if re.match('^[a-zA-Z]+$',content):#英译中
-        url="http://translate.google.cn/translate_a/single?client=t&sl=en&tl=zh-CN&hl=zh-CN&dt=at&dt=bd&dt=ex&dt=ld&dt=md&dt=qca&dt=rw&dt=rm&dt=ss&dt=t&ie=UTF-8&oe=UTF-8&clearbtn=1&otf=1&pc=1&srcrom=0&ssel=0&tsel=0&kc=2"
-    elif re.match('^[\u4e00-\u9fa5]+$',content):#中译英
-        url="http://translate.google.cn/translate_a/single?client=t&sl=zh-CN&tl=en&hl=en&dt=at&dt=bd&dt=ex&dt=ld&dt=md&dt=qca&dt=rw&dt=rm&dt=ss&dt=t&ie=UTF-8&oe=UTF-8&clearbtn=1&otf=1&pc=1&srcrom=0&ssel=0&tsel=0&kc=2"
+    urlDic={'en_ch':"http://translate.google.cn/translate_a/single?client=t&sl=en&tl=zh-CN&hl=zh-CN&dt=at&dt=bd&dt=ex&dt=ld&dt=md&dt=qca&dt=rw&dt=rm&dt=ss&dt=t&ie=UTF-8&oe=UTF-8&clearbtn=1&otf=1&pc=1&srcrom=0&ssel=0&tsel=0&kc=2",'ch_en':"http://translate.google.cn/translate_a/single?client=t&sl=zh-CN&tl=en&hl=en&dt=at&dt=bd&dt=ex&dt=ld&dt=md&dt=qca&dt=rw&dt=rm&dt=ss&dt=t&ie=UTF-8&oe=UTF-8&clearbtn=1&otf=1&pc=1&srcrom=0&ssel=0&tsel=0&kc=2"}
+    if types:
+        try:url=urlDic[types]
+        except KeyError:
+            print('Error: types can only be ch_en or en_ch')
+            sys.exit(0)
+    elif not re.search('^[\u4e00-\u9fa5]+$',content):#英译中
+        url=urlDic['en_ch']
+    elif not re.search('^[a-zA-Z]+$',content):#中译英
+        url=urlDic['ch_en']
+    else:url=urlDic['en_ch']
     r=requests.get(url,params=param)
     result=''
     for i in range(len(r.json()[0])):
