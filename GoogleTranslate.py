@@ -50,11 +50,12 @@ def translate(content,type='en_ch'):
     if len(content)>4891:
         print("字符长度超过限制！")
         return
-    param={'tk': tk, 'q': content}  
-    if type=='en_ch':
-        r=requests.get("http://translate.google.cn/translate_a/single?client=t&sl=en&tl=zh-CN&hl=zh-CN&dt=at&dt=bd&dt=ex&dt=ld&dt=md&dt=qca&dt=rw&dt=rm&dt=ss&dt=t&ie=UTF-8&oe=UTF-8&clearbtn=1&otf=1&pc=1&srcrom=0&ssel=0&tsel=0&kc=2", params=param) 
-    elif type=='ch_en':
-        r=requests.get("http://translate.google.cn/translate_a/single?client=t&sl=zh-CN&tl=en&hl=en&dt=at&dt=bd&dt=ex&dt=ld&dt=md&dt=qca&dt=rw&dt=rm&dt=ss&dt=t&ie=UTF-8&oe=UTF-8&clearbtn=1&otf=1&pc=1&srcrom=0&ssel=0&tsel=0&kc=2", params=param)
+    param={'tk': tk, 'q': content}
+    if re.match('^[a-zA-Z]+$',content):#英译中
+        url="http://translate.google.cn/translate_a/single?client=t&sl=en&tl=zh-CN&hl=zh-CN&dt=at&dt=bd&dt=ex&dt=ld&dt=md&dt=qca&dt=rw&dt=rm&dt=ss&dt=t&ie=UTF-8&oe=UTF-8&clearbtn=1&otf=1&pc=1&srcrom=0&ssel=0&tsel=0&kc=2"
+    elif re.match('^[\u4e00-\u9fa5]+$',content):#中译英
+        url="http://translate.google.cn/translate_a/single?client=t&sl=zh-CN&tl=en&hl=en&dt=at&dt=bd&dt=ex&dt=ld&dt=md&dt=qca&dt=rw&dt=rm&dt=ss&dt=t&ie=UTF-8&oe=UTF-8&clearbtn=1&otf=1&pc=1&srcrom=0&ssel=0&tsel=0&kc=2"
+    r=requests.get(url,params=param)
     result=''
     for i in range(len(r.json()[0])):
         if r.json()[0][i][0]:
