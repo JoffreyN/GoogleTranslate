@@ -3,6 +3,7 @@
 ## 依赖
 ~~~python
  pip install PyExecJS
+ pip install requests
 ~~~
 ## 使用
 将GoogleTranslate.py放到~Python36\Lib\site-packages目录下<br>
