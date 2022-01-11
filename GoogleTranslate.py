@@ -1,4 +1,4 @@
-import requests,execjs    
+import requests,execjs,re
 
 class Py4Js():     
     def __init__(self):  
