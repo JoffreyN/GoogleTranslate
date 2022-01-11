@@ -1,7 +1,4 @@
-import requests
-import execjs    
-import re
-import sys
+import requests,execjs,re,sys
 
 class Py4Js():     
     def __init__(self):  
